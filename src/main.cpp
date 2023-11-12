@@ -63,7 +63,7 @@ void callback(char* topic, byte* payload, unsigned int length) {
 
   // send received MQTT packet via LoRa
   LoRa.beginPacket();
-  LoRa.write((byte*)&payload, length);
+  LoRa.write(p, length);
   LoRa.endPacket();
 
   // do not forget to free allocated memory
@@ -77,7 +77,6 @@ void initLoRa(){
   LoRa.setSPI(LoRa_SPI);
   LoRa.setPins(LORA_CS, LORA_RST, LORA_DIO0);
   LoRa.setFrequency(LORA_FREQ);
-  LoRa.setCodingRate4(LORA_RATE);
   LoRa.setSignalBandwidth(LORA_BAND);
 
   if (!LoRa.begin(LORA_FREQ)) {
@@ -91,6 +90,7 @@ void initLoRa(){
 
   // Settings for LoRaWAN compatible LoRa packets
   LoRa.enableCrc();
+  LoRa.setCodingRate4(LORA_RATE);
   LoRa.setPreambleLength(LORA_PREA);
   LoRa.setSpreadingFactor(LORA_SF);
   LoRa.setSyncWord(LORA_SYNC);
